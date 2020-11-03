@@ -16,18 +16,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gamestore.demo.model.Game;
 import com.gamestore.demo.model.Response;
 import com.gamestore.demo.repository.GameRepository;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
+@RequestMapping(produces = "application/json")
 public class GameController {
 
 	@Autowired
 	private GameRepository gameRepository;
 	
+	@ApiOperation(value = "Retorna uma lista de jogos")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Sucesso"),
+			@ApiResponse(code = 403, message = "Não tem permissão"),
+			@ApiResponse(code = 404, message = "EndPoint Não encontrado"),
+			@ApiResponse(code = 500, message = "Erro no servidor"),
+	})
 	@GetMapping(value = "/game")
 	public ResponseEntity<Response<List<Game>>> listarGames() 
 	{
@@ -36,8 +49,16 @@ public class GameController {
 		response.setData(listaGames);
 		response.setStatus(HttpStatus.OK.value());
 		return ResponseEntity.ok(response);
+		
 	}
 	
+	@ApiOperation(value = "Retorna uma jogo determinado")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Sucesso"),
+			@ApiResponse(code = 403, message = "Não tem permissão"),
+			@ApiResponse(code = 404, message = "Jogo não encontrado"),
+			@ApiResponse(code = 500, message = "Erro no servidor"),
+	})
 	@GetMapping(value = "/game/{id}")
 	public ResponseEntity<Response<Optional<Game>>> obterGame(@PathVariable Integer id) 
 	{
@@ -53,6 +74,13 @@ public class GameController {
 		
 	}
 	
+	@ApiOperation(value = "Edita uma jogo")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Sucesso"),
+			@ApiResponse(code = 403, message = "Não tem permissão"),
+			@ApiResponse(code = 404, message = "Jogo não encontrado"),
+			@ApiResponse(code = 500, message = "Erro no servidor")
+	})
 	@PutMapping(value = "/game/{id}")
 	public ResponseEntity<Response<Game>> modificarGame( @PathVariable(value = "id") int id, @Valid @RequestBody Game newGame, BindingResult result) 
 	{
@@ -82,6 +110,14 @@ public class GameController {
 			return ResponseEntity.ok(response);
 	}
 	
+	@ApiOperation(value = "Adiciona um jogo")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Sucesso"),
+			@ApiResponse(code = 201, message = "Jogo criado"),
+			@ApiResponse(code = 403, message = "Não tem permissão"),
+			@ApiResponse(code = 404, message = "Jogo não encontrado"),
+			@ApiResponse(code = 500, message = "Erro no servidor")
+	})
 	@PostMapping(value = "/game")
 	public ResponseEntity<Response<Game>> addGame(@Valid @RequestBody Game game, BindingResult result) 
 	{
@@ -101,6 +137,14 @@ public class GameController {
 		return ResponseEntity.ok(response);
 	}
 	
+	@ApiOperation(value = "Deleta um jogo")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Sucesso"),
+			@ApiResponse(code = 204, message = "Jogo deletado"),
+			@ApiResponse(code = 403, message = "Não tem permissão"),
+			@ApiResponse(code = 404, message = "Jogo não encontrado"),
+			@ApiResponse(code = 500, message = "Erro no servidor")
+	})
 	@DeleteMapping(value = "/game/{id}")
 	public ResponseEntity<Response<Game>> deletarGame(@PathVariable Integer id) 
 	{
@@ -114,6 +158,14 @@ public class GameController {
 		return ResponseEntity.ok(response);
 	}
 	
+	@ApiOperation(value = "Vende um jogo")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Jogo vendido"),
+			@ApiResponse(code = 201, message = "Jogo modificado"),
+			@ApiResponse(code = 403, message = "Não tem permissão"),
+			@ApiResponse(code = 404, message = "Jogo não encontrado"),
+			@ApiResponse(code = 500, message = "Erro no servidor")
+	})
 	@PutMapping(value = "/game/venda/{id}")
 	public ResponseEntity<Response<Game>> venderGame(@PathVariable(value = "id") int id)
 	{
