@@ -18,7 +18,7 @@
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
     >
-      <!-- Text slides with image -->
+
       <b-carousel-slide
         caption="Alien Isolation"
         text="“The game the Alien series has always deserved” 93% – PCGAMER."
@@ -29,19 +29,15 @@
         mortal.
       </b-carousel-slide>
 
-      <!-- Slides with custom text -->
       <b-carousel-slide
         img-src="https://i.pinimg.com/originals/9f/3c/9e/9f3c9e90afbe301f43cb3a1d90751642.jpg"
       >
       </b-carousel-slide>
 
-      <!-- Slides with image only -->
       <b-carousel-slide
         img-src="https://images8.alphacoders.com/594/thumb-1920-594648.jpg"
       ></b-carousel-slide>
 
-      <!-- Slides with img slot -->
-      <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
       <b-carousel-slide>
         <template #img>
           <img
@@ -54,7 +50,6 @@
         </template>
       </b-carousel-slide>
 
-      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
       <b-carousel-slide caption="Easiness" img-blank img-alt="Blank image">
         <p>
           A melhor loja de jogos, feita pra você, com diversos jogos e estilos
