@@ -12,7 +12,6 @@
            <a href="#/game">  <img v-bind:src="game.imagem" height="200" width="400" @click="selecionarGame(game.id)"/></a>
           </td>
           <td >{{ game.titulo }}</td>
-          <td v-show="aparecer">{{game.preco}}</td>
         </tr>
       </tbody>
     </table>
@@ -25,7 +24,6 @@ export default {
   data() {
     return {
       games: [],
-      aparecer : false
     };
   },
   created() {
